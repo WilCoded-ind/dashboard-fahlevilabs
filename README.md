@@ -90,10 +90,10 @@ php artisan migrate --seed
 
 | Layer | Technology |
 |---|---|
-| Backend | Laravel 11 |
-| Frontend | React 18 |
-| Bridge | Inertia.js |
-| Styling | Tailwind CSS |
+| Backend | Laravel 13 (new version) |
+| Frontend | React 19 |
+| Bridge | Inertia.js 3 |
+| Styling | Tailwind CSS v4 |
 | Database | SQLite / MySQL |
 
 ---
