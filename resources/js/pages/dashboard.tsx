@@ -6,7 +6,7 @@ export default function Dashboard() {
     return (
         <>
             <Head title="Dashboard"/>
-            <div className="max-w-8xl overflow-x-auto rounded-xl p- md:p-8">
+            <div className="max-w-8xl overflow-x-auto rounded-xl p-4 md:p-8">
                 {/* breadcrumbs */}
                 <div>
                         {/* breadcrumbs */}
