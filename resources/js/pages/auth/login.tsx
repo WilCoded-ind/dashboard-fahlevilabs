@@ -29,7 +29,7 @@ export default function Login({
             <Form
                 {...store.form()}
                 resetOnSuccess={['password']}
-                className="flex flex-col gap-6 shadow-lg rounded-xl border p-6"
+                className="flex flex-col gap-6 shadow-lg rounded-xl border p-6 "
             >
                 {({ processing, errors }) => (
                     <>
