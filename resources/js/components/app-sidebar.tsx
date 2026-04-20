@@ -1,5 +1,5 @@
 import { Link } from '@inertiajs/react';
-import { BookOpen, FolderGit2, LayoutGrid } from 'lucide-react';
+import { BookOpen, Folder, LayoutGrid, UsersRound, UserRoundCog, ShieldCheck } from 'lucide-react';
 import AppLogo from '@/components/app-logo';
 import { NavFooter } from '@/components/nav-footer';
 import { NavMain } from '@/components/nav-main';
@@ -23,9 +23,24 @@ const mainNavItems: NavItem[] = [
         icon: LayoutGrid,
     },
     {
-        title: 'Users',
+        title: 'Users Management',
         href: '/users',
-        icon: LayoutGrid,
+        icon: UsersRound,
+    },
+    {
+        title: 'Roles & Permissions',
+        href: '/roles',
+        icon: UserRoundCog,
+    },
+    {
+        title: 'Permissions',
+        href: '/permissions',
+        icon: ShieldCheck,
+    },
+    {
+        title: 'Menu Management',
+        href: '/menus',
+        icon: Folder,
     },
 ];
 
