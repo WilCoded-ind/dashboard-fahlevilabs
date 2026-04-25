@@ -110,6 +110,93 @@ php artisan migrate --seed
 
 ---
 
+## Structure File
+# Backend
+app/
+├── Http/
+│   ├── Controllers/
+│   │   ├── UserController.php
+│   │   ├── RoleController.php
+│   │   ├── MenuController.php
+│   │   └── PermissionController.php
+│   │
+│   ├── Requests/
+│   │   ├── User/
+│   │   │   ├── StoreUserRequest.php
+│   │   │   └── UpdateUserRequest.php
+│   │   ├── Role/
+│   │   │   ├── StoreRoleRequest.php
+│   │   │   └── UpdateRoleRequest.php
+│   │   ├── Menu/
+│   │   │   ├── StoreMenuRequest.php
+│   │   │   └── UpdateMenuRequest.php
+│   │   └── Permission/
+│   │       └── UpdatePermissionRequest.php
+│   │
+│   └── Middleware/
+│       └── CheckPermission.php        // Middleware custom untuk cek RBAC dynamic dari database
+│
+├── Models/
+│   ├── User.php
+│   ├── Role.php
+│   ├── Menu.php
+│   └── Permission.php
+│
+├── Repositories/
+│   ├── Contracts/                     // Interface untuk setiap repository
+│   │   ├── UserRepositoryInterface.php
+│   │   ├── RoleRepositoryInterface.php
+│   │   ├── MenuRepositoryInterface.php
+│   │   └── PermissionRepositoryInterface.php
+│   ├── UserRepository.php
+│   ├── RoleRepository.php
+│   ├── MenuRepository.php
+│   └── PermissionRepository.php
+│
+├── Services/
+│   ├── Contracts/                     // Interface untuk setiap service
+│   │   ├── UserServiceInterface.php
+│   │   ├── RoleServiceInterface.php
+│   │   ├── MenuServiceInterface.php
+│   │   └── PermissionServiceInterface.php
+│   ├── UserService.php
+│   ├── RoleService.php
+│   ├── MenuService.php
+│   └── PermissionService.php
+│
+└── Providers/
+    └── RepositoryServiceProvider.php  // Binding semua interface ke implementasinya
+
+
+# Frontend
+resources/js/
+├── actions/                           // Fungsi aksi seperti fetch, submit form, dll
+├── components/                        // Komponen UI yang dipakai bersama
+├── hooks/                             // Custom React hooks
+├── layouts/                           // Layout utama aplikasi (sidebar, navbar, dll)
+├── lib/                               // Helper / utility function
+├── pages/
+│   ├── auth/                          // Halaman login, register, dll
+│   ├── menus/
+│   │   ├── index.tsx                  // Daftar semua menu
+│   │   ├── create.tsx                 // Form tambah menu
+│   │   └── edit.tsx                   // Form edit menu
+│   ├── roles/
+│   │   ├── index.tsx                  // Daftar semua role
+│   │   ├── create.tsx                 // Form tambah role
+│   │   ├── edit.tsx                   // Form edit role
+│   │   └── permission.tsx             // Halaman kelola permission per role (dari action show di index)
+│   ├── settings/                      // Halaman pengaturan aplikasi
+│   ├── users/
+│   │   ├── index.tsx                  // Daftar semua user
+│   │   ├── create.tsx                 // Form tambah user
+│   │   ├── edit.tsx                   // Form edit user
+│   │   └── show.tsx                   // Detail user
+│   └── dashboard.tsx                  // Halaman utama setelah login
+
+
+---
+
 ## Flow
 
 ```
