@@ -111,7 +111,8 @@ php artisan migrate --seed
 ---
 
 ## Structure File
-# Backend
+### Backend
+```
 app/
 ├── Http/
 │   ├── Controllers/
@@ -166,9 +167,11 @@ app/
 │
 └── Providers/
     └── RepositoryServiceProvider.php  // Binding semua interface ke implementasinya
+```
 
 
-# Frontend
+### Frontend
+```
 resources/js/
 ├── actions/                           // Fungsi aksi seperti fetch, submit form, dll
 ├── components/                        // Komponen UI yang dipakai bersama
@@ -193,7 +196,7 @@ resources/js/
 │   │   ├── edit.tsx                   // Form edit user
 │   │   └── show.tsx                   // Detail user
 │   └── dashboard.tsx                  // Halaman utama setelah login
-
+```
 
 ---
 
