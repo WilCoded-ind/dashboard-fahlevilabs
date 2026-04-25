@@ -27,7 +27,7 @@ export default function AuthSimpleLayout({
                 <div className="flex flex-col items-center justify-center gap-8 p-10">
                     <div className="flex w-full max-w-md flex-col items-center">
                         <div className="flex h-24 w-24 items-center justify-center">
-                            <img src="/images/logo-new.png" alt="FahleviLabs" />
+                            <img src="/images/logo-01.png" alt="FahleviLabs" />
                         </div>
                         <div className="w-full space-y-2 text-center">
                             <h1 className="text-xl font-bold text-muted-foreground">{title}</h1>

@@ -160,12 +160,22 @@ export default function CreateUser() {
                                             </Label>
 
                                             <div className="col-span-2 w-full">
-                                                <Input
-                                                    type="text"
-                                                    placeholder="Enter menu order"
-                                                />
-                                                <span className='text-xs text-muted-foreground'>
-                                                    Use icon names from lucide-react library, e.g. "Home", "Settings", "User", etc.
+                                                <div className="flex items-center gap-2">
+                                                    <Input
+                                                        type="text"
+                                                        placeholder="Enter menu order"
+                                                    />
+                                                    <a href="https://lucide.dev/icons/" target="_blank" rel="noopener noreferrer">
+                                                        <Button variant="outline">
+                                                            Browse Icons
+                                                        </Button>
+                                                    </a>
+                                                </div>
+                                                <span className="text-xs text-muted-foreground">
+                                                    Use icon names from
+                                                    lucide-react library, e.g.
+                                                    "Home", "Settings", "User",
+                                                    etc.
                                                 </span>
                                             </div>
                                         </div>
