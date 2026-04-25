@@ -135,7 +135,7 @@ app/
 │   │       └── UpdatePermissionRequest.php
 │   │
 │   └── Middleware/
-│       └── CheckPermission.php        // Middleware custom untuk cek RBAC dynamic dari database
+│       └── CheckPermission.php                 // Middleware custom untuk cek RBAC dynamic dari database
 │
 ├── Models/
 │   ├── User.php
@@ -144,7 +144,7 @@ app/
 │   └── Permission.php
 │
 ├── Repositories/
-│   ├── Contracts/                     // Interface untuk setiap repository
+│   ├── Contracts/                              // Interface untuk setiap repository
 │   │   ├── UserRepositoryInterface.php
 │   │   ├── RoleRepositoryInterface.php
 │   │   ├── MenuRepositoryInterface.php
@@ -155,7 +155,7 @@ app/
 │   └── PermissionRepository.php
 │
 ├── Services/
-│   ├── Contracts/                     // Interface untuk setiap service
+│   ├── Contracts/                              // Interface untuk setiap service
 │   │   ├── UserServiceInterface.php
 │   │   ├── RoleServiceInterface.php
 │   │   ├── MenuServiceInterface.php
@@ -166,36 +166,36 @@ app/
 │   └── PermissionService.php
 │
 └── Providers/
-    └── RepositoryServiceProvider.php  // Binding semua interface ke implementasinya
+    └── RepositoryServiceProvider.php           // Binding semua interface ke implementasinya
 ```
 
 
 ### Frontend
 ```
 resources/js/
-├── actions/                           // Fungsi aksi seperti fetch, submit form, dll
-├── components/                        // Komponen UI yang dipakai bersama
-├── hooks/                             // Custom React hooks
-├── layouts/                           // Layout utama aplikasi (sidebar, navbar, dll)
-├── lib/                               // Helper / utility function
+├── actions/                           
+├── components/                        
+├── hooks/                             
+├── layouts/                           
+├── lib/                               
 ├── pages/
-│   ├── auth/                          // Halaman login, register, dll
+│   ├── auth/                                   // Halaman login, register, dll
 │   ├── menus/
-│   │   ├── index.tsx                  // Daftar semua menu
-│   │   ├── create.tsx                 // Form tambah menu
-│   │   └── edit.tsx                   // Form edit menu
+│   │   ├── index.tsx                           // Daftar semua menu
+│   │   ├── create.tsx                          // Form tambah menu
+│   │   └── edit.tsx                            // Form edit menu
 │   ├── roles/
-│   │   ├── index.tsx                  // Daftar semua role
-│   │   ├── create.tsx                 // Form tambah role
-│   │   ├── edit.tsx                   // Form edit role
-│   │   └── permission.tsx             // Halaman kelola permission per role (dari action show di index)
-│   ├── settings/                      // Halaman pengaturan aplikasi
+│   │   ├── index.tsx                           // Daftar semua role
+│   │   ├── create.tsx                          // Form tambah role
+│   │   ├── edit.tsx                            // Form edit role
+│   │   └── permission.tsx                      // Halaman kelola permission per role (dari action show di index)
+│   ├── settings/                               // Halaman pengaturan aplikasi
 │   ├── users/
-│   │   ├── index.tsx                  // Daftar semua user
-│   │   ├── create.tsx                 // Form tambah user
-│   │   ├── edit.tsx                   // Form edit user
-│   │   └── show.tsx                   // Detail user
-│   └── dashboard.tsx                  // Halaman utama setelah login
+│   │   ├── index.tsx                           // Daftar semua user
+│   │   ├── create.tsx                          // Form tambah user
+│   │   ├── edit.tsx                            // Form edit user
+│   │   └── show.tsx                            // Detail user
+│   └── dashboard.tsx                           // Halaman utama setelah login
 ```
 
 ---
