@@ -79,6 +79,7 @@ class RoleController extends Controller
         return redirect()->route('roles.index');
     }
 
+    // method permission
     public function permission(Role $role): Response
     {
         return Inertia::render('roles/permission', [
@@ -88,6 +89,7 @@ class RoleController extends Controller
         ]);
     }
 
+    // method update permission
     public function updatePermission(UpdatePermissionRequest $request, Role $role): RedirectResponse
     {
         $this->permissionService->updateByRoleId(
