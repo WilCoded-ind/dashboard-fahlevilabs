@@ -6,11 +6,13 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateRoleRequest extends FormRequest
 {
+    // mengizinkan semua user melakukan request
     public function authorize(): bool
     {
         return true;
     }
 
+    // validasi data yang masuk
     public function rules(): array
     {
         return [
