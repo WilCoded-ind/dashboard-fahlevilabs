@@ -1,9 +1,4 @@
 import { Head } from '@inertiajs/react';
-import { ChevronRight } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { dashboard } from '@/routes';
 import {
     Breadcrumb,
     BreadcrumbItem,
@@ -12,6 +7,10 @@ import {
     BreadcrumbPage,
     BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb';
+import { Button } from '@/components/ui/button';
+import { Card } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { dashboard } from '@/routes';
 
 export default function Dashboard() {
     return (
