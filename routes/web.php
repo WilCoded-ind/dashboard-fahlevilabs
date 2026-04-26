@@ -1,42 +1,33 @@
 <?php
 
+use App\Http\Controllers\MenuController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
-use Laravel\Fortify\Features;
+use Inertia\Inertia;
 
-// auth mengarah ke login bukan welcome
-Route::inertia('/', 'auth/login', [
-    'canRegister' => Features::enabled(Features::registration()),
-])->name('home');
-
-Route::middleware(['auth', 'verified'])->group(function () {
-    // route - dashboard
-    Route::inertia('dashboard', 'dashboard')->name('dashboard');
-
-    // route - user
-    Route::inertia('users', 'users/index')->name('users.index');
-    Route::inertia('users/create', 'users/create')->name('users.create');
-    Route::inertia('users/{user}/edit', 'users/edit')->name('users.edit');
-    Route::inertia('users/{user}', 'users/show')->name('users.show');
-
-    // route - role
-    Route::get('roles', [RoleController::class, 'index'])->name('roles.index');
-    Route::get('roles/create', [RoleController::class, 'create'])->name('roles.create');
-    Route::post('roles', [RoleController::class, 'store'])->name('roles.store');
-    Route::get('roles/{role}/edit', [RoleController::class, 'edit'])->name('roles.edit');
-    Route::put('roles/{role}', [RoleController::class, 'update'])->name('roles.update');
-    Route::delete('roles/{role}', [RoleController::class, 'destroy'])->name('roles.destroy');
-    Route::get('roles/{role}/permissions', [RoleController::class, 'permission'])->name('roles.permissions');
-    Route::put('roles/{role}/permissions', [RoleController::class, 'updatePermission'])->name('roles.permissions.update');
-
-    // route - permission
-    Route::inertia('permissions', 'permissions/index')->name('permissions.index');
-
-    // route - menu
-    Route::inertia('menus', 'menus/index')->name('menus.index');
-    Route::inertia('menus/create', 'menus/create')->name('menus.create');
-    Route::inertia('menus/{menu}/edit', 'menus/edit')->name('menus.edit');
-    Route::inertia('menus/{menu}', 'menus/show')->name('menus.show');
+//  default route mengarah ke dashboard
+Route::get('/', function () {
+    return redirect()->route('dashboard');
 });
 
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/dashboard', fn() => Inertia::render('dashboard'))->name('dashboard');
+
+    Route::middleware(['checkPermission'])->group(function () {
+        // roles
+        Route::resource('roles', RoleController::class)->except(['show']);
+        Route::get('roles/{role}/permission', [RoleController::class. 'permission'])->name('roles.permission');
+        Route::put('roles/{role}/permission', [RoleController::class. 'updatePermission'])->name('roles.updatePermission');
+
+        // menu
+        Route::resource('menus', MenuController::class)->except(['show']);
+
+        // user
+        Route::resource('users', UserController::class);
+
+    });
+});
+
+require __DIR__.'/auth.php';
 require __DIR__.'/settings.php';
