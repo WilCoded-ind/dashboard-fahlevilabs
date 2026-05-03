@@ -8,6 +8,8 @@ import {
     BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb';
 import { Button } from '@/components/ui/button';
+import { router } from '@inertiajs/react';
+import { Trash, Pen, Shield } from 'lucide-react';
 
 // datatable
 import { DataTable } from '@/components/ui/data-table';
@@ -33,21 +35,32 @@ const columns: ColumnDef<any>[] = [
         cell: ({ row }) => (
             <div className="flex gap-2">
                 <a href={`/roles/${row.original.id}/permission`}>
-                    <Button variant="outline" size="sm">
-                        Permission
+                    <Button variant="secondary" size="sm">
+                            <Shield className='h-4 w-4'/>
                     </Button>
                 </a>
                 <a href={`/roles/${row.original.id}/edit`}>
                     <Button variant="outline" size="sm">
-                        Edit
+                        <Pen className='h-4 w-4'/>
                     </Button>
                 </a>
+                <Button
+                    variant="destructive"
+                    size="sm"
+                    onClick={() => {
+                        if (confirm('Yakin mau hapus role ini?')) {
+                            router.delete(`/roles/${row.original.id}`);
+                        }
+                    }}
+                >
+                    <Trash className="h-4 w-4" />
+                </Button>
             </div>
         ),
     },
 ];
 
-export default function RoleIndex({ roles }: { roles:any }) {
+export default function RoleIndex({ roles }: { roles: any }) {
     return (
         <>
             <Head title="User Management" />
@@ -56,7 +69,9 @@ export default function RoleIndex({ roles }: { roles:any }) {
                 <Breadcrumb className="pb-3">
                     <BreadcrumbList>
                         <BreadcrumbItem>
-                            <BreadcrumbLink href="/dashboard">Dashboard</BreadcrumbLink>
+                            <BreadcrumbLink href="/dashboard">
+                                Dashboard
+                            </BreadcrumbLink>
                         </BreadcrumbItem>
                         <BreadcrumbSeparator />
                         <BreadcrumbItem>
@@ -95,7 +110,7 @@ export default function RoleIndex({ roles }: { roles:any }) {
                 <div className="border-t border-gray-400/70 shadow" />
 
                 {/* datatable */}
-                <div className="mt-3 ">
+                <div className="mt-3">
                     <DataTable columns={columns} data={roles.data} />
                 </div>
             </div>

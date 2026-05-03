@@ -10,6 +10,8 @@ import {
     BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb';
 import { router } from '@inertiajs/react';
+import { Trash, Pen, Eye } from 'lucide-react';
+
 // datatable
 import { DataTable } from '@/components/ui/data-table';
 import { ColumnDef } from '@tanstack/react-table';
@@ -38,13 +40,13 @@ const columns: ColumnDef<any>[] = [
         cell: ({ row }) => (
             <div className="flex gap-2">
                 <a href={`/users/${row.original.id}`}>
-                    <Button variant="outline" size="sm">
-                        Show
+                    <Button variant="secondary" size="sm">
+                        <Eye className="h-4 w-4" />
                     </Button>
                 </a>
                 <a href={`/users/${row.original.id}/edit`}>
                     <Button variant="outline" size="sm">
-                        Edit
+                        <Pen className="h-4 w-4" />
                     </Button>
                 </a>
                 <Button
@@ -56,7 +58,7 @@ const columns: ColumnDef<any>[] = [
                         }
                     }}
                 >
-                    Delete
+                    <Trash className="h-4 w-4" />
                 </Button>
             </div>
         ),
