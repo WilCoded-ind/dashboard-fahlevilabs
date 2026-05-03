@@ -3,10 +3,14 @@ import * as Icons from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import {
     SidebarGroup,
+    SidebarGroupContent,
     SidebarGroupLabel,
     SidebarMenu,
     SidebarMenuButton,
     SidebarMenuItem,
+    SidebarMenuSub,
+    SidebarMenuSubButton,
+    SidebarMenuSubItem,
 } from '@/components/ui/sidebar';
 import { useCurrentUrl } from '@/hooks/use-current-url';
 
@@ -26,21 +30,50 @@ function resolveIcon(name: string | null): LucideIcon | null {
 
 export function NavMain({ menus }: { menus: SidebarMenuItem[] }) {
     const { isCurrentUrl } = useCurrentUrl();
+    const safeMenus = Array.isArray(menus) ? menus : [];
 
     return (
         <>
-            {menus.map((menu) => {
-                // standalone — tidak punya children, punya url
+            {safeMenus.map((menu) => {
+                const Icon = resolveIcon(menu.icon);
+
                 if (!menu.children?.length) {
-                    const Icon = resolveIcon(menu.icon);
                     return (
                         <SidebarGroup key={menu.id} className="px-2 py-0">
+                            <SidebarGroupContent>
+                                <SidebarMenu>
+                                    <SidebarMenuItem>
+                                        <SidebarMenuButton
+                                            asChild
+                                            isActive={isCurrentUrl(menu.url ?? '')}
+                                            tooltip={menu.name}
+                                            className="text-sidebar-foreground"
+                                        >
+                                            <Link href={menu.url ?? '#'} prefetch>
+                                                {Icon && <Icon />}
+                                                <span>{menu.name}</span>
+                                            </Link>
+                                        </SidebarMenuButton>
+                                    </SidebarMenuItem>
+                                </SidebarMenu>
+                            </SidebarGroupContent>
+                        </SidebarGroup>
+                    );
+                }
+
+                return (
+                    <SidebarGroup key={menu.id} className="px-2 py-0">
+                        <SidebarGroupLabel className="text-sidebar-foreground/70">
+                            {menu.name}
+                        </SidebarGroupLabel>
+                        <SidebarGroupContent>
                             <SidebarMenu>
                                 <SidebarMenuItem>
                                     <SidebarMenuButton
                                         asChild
                                         isActive={isCurrentUrl(menu.url ?? '')}
-                                        tooltip={{ children: menu.name }}
+                                        tooltip={menu.name}
+                                        className="text-sidebar-foreground"
                                     >
                                         <Link href={menu.url ?? '#'} prefetch>
                                             {Icon && <Icon />}
@@ -48,34 +81,29 @@ export function NavMain({ menus }: { menus: SidebarMenuItem[] }) {
                                         </Link>
                                     </SidebarMenuButton>
                                 </SidebarMenuItem>
-                            </SidebarMenu>
-                        </SidebarGroup>
-                    );
-                }
 
-                // group — parent jadi label, children jadi item
-                return (
-                    <SidebarGroup key={menu.id} className="px-2 py-0">
-                        <SidebarGroupLabel>{menu.name}</SidebarGroupLabel>
-                        <SidebarMenu>
-                            {menu.children.map((child) => {
-                                const Icon = resolveIcon(child.icon);
-                                return (
-                                    <SidebarMenuItem key={child.id}>
-                                        <SidebarMenuButton
-                                            asChild
-                                            isActive={isCurrentUrl(child.url ?? '')}
-                                            tooltip={{ children: child.name }}
-                                        >
-                                            <Link href={child.url ?? '#'} prefetch>
-                                                {Icon && <Icon />}
-                                                <span>{child.name}</span>
-                                            </Link>
-                                        </SidebarMenuButton>
-                                    </SidebarMenuItem>
-                                );
-                            })}
-                        </SidebarMenu>
+                                <SidebarMenuSub>
+                                    {menu.children.map((child) => {
+                                        const ChildIcon = resolveIcon(child.icon);
+
+                                        return (
+                                            <SidebarMenuSubItem key={child.id}>
+                                                <SidebarMenuSubButton
+                                                    asChild
+                                                    isActive={isCurrentUrl(child.url ?? '')}
+                                                    className="text-sidebar-foreground"
+                                                >
+                                                    <Link href={child.url ?? '#'} prefetch>
+                                                        {ChildIcon && <ChildIcon />}
+                                                        <span>{child.name}</span>
+                                                    </Link>
+                                                </SidebarMenuSubButton>
+                                            </SidebarMenuSubItem>
+                                        );
+                                    })}
+                                </SidebarMenuSub>
+                            </SidebarMenu>
+                        </SidebarGroupContent>
                     </SidebarGroup>
                 );
             })}

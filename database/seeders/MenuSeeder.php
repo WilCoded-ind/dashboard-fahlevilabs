@@ -28,7 +28,7 @@ class MenuSeeder extends Seeder
             ['name' => 'User Management'],
             [
                 'slug' => Str::slug('User Management'),
-                'url' => 'users/index',
+                'url' => '/users',
                 'parent_id' => $administratorMenu->id,
                 'order' => 1,
                 'icon' => 'UserCog',
@@ -39,7 +39,7 @@ class MenuSeeder extends Seeder
             ['name' => 'Role & Permission'],
             [
                 'slug' => Str::slug('Role & Permission'),
-                'url' => 'roles/index',
+                'url' => '/roles',
                 'parent_id' => $administratorMenu->id,
                 'order' => 2,
                 'icon' => 'ShieldCheck',
@@ -50,7 +50,7 @@ class MenuSeeder extends Seeder
             ['name' => 'Menu Management'],
             [
                 'slug' => Str::slug('Menu Management'),
-                'url' => 'menus/index',
+                'url' => '/menus',
                 'parent_id' => null,
                 'order' => 2,
                 'icon' => 'LayoutList',

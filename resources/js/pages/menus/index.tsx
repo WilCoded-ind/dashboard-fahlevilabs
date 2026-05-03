@@ -78,7 +78,7 @@ export default function MenusIndex({ menus }: { menus: any }) {
     return (
         <>
             <Head title="Menu Management" />
-            <div className="max-w-8xl overflow-x-auto rounded-xl p-4 md:p-8">
+            <div className="max-w-8xl overflow-x-auto rounded-xl p-2 md:px-6">
                 {/* breadcrumbs */}
                 <Breadcrumb className="pb-3">
                     <BreadcrumbList>
@@ -111,14 +111,15 @@ export default function MenusIndex({ menus }: { menus: any }) {
                     {/* add */}
                     <a href="menus/create">
                         <Button variant="secondary" size="sm">
-                            Add New Menu
+                            Add New
                         </Button>
                     </a>
 
-                    {/* filter */}
-                    <Button variant="secondary" size="sm">
+
+                    {/* refresh */}
+                    {/* <Button variant="secondary" size="sm" >
                         Refresh
-                    </Button>
+                    </Button> */}
                 </div>
 
                 {/* garis pembatas */}

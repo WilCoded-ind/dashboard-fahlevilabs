@@ -14,6 +14,7 @@ class UserSeeder extends Seeder
     public function run(): void
     {
         $roleIds = Role::query()->pluck('id')->all();
+        $adminRoleId = Role::query()->where('name', 'Admin')->value('id');
 
         $users = [
             'Wildan Ahmad',
@@ -41,14 +42,20 @@ class UserSeeder extends Seeder
 
         foreach ($users as $index => $fullName) {
             $firstName = strtolower(strtok($fullName, ' '));
+            $email = $firstName . '@gmail.com';
+            $existingRoleId = User::query()
+                ->where('email', $email)
+                ->value('roles_id');
 
             User::query()->updateOrCreate(
-                ['email' => $firstName . '@gmail.com'],
+                ['email' => $email],
                 [
                     'name' => $fullName,
                     'username' => $firstName,
                     'password' => bcrypt('123456'),
-                    'roles_id' => fake()->randomElement($roleIds),
+                    'roles_id' => $fullName === 'Wildan Ahmad'
+                        ? $adminRoleId
+                        : ($existingRoleId ?? fake()->randomElement($roleIds)),
                     'is_active' => $index < 10,
                 ],
             );

@@ -36,11 +36,11 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
-        $menus = [];
+        $sidebarMenus = [];
 
-        if($request->user()) {
-            $menus = app(MenuServiceInterface::class)
-                ->getForSidebar($request->user()->role_id)
+        if ($request->user()?->roles_id !== null) {
+            $sidebarMenus = app(MenuServiceInterface::class)
+                ->getForSidebar($request->user()->roles_id)
                 ->toArray();
         }
 
@@ -51,7 +51,7 @@ class HandleInertiaRequests extends Middleware
                 'user' => $request->user(),
             ],
             'sidebarOpen' => ! $request->hasCookie('sidebar_state') || $request->cookie('sidebar_state') === 'true',
-            'menus' => $menus,
+            'sidebarMenus' => $sidebarMenus,
         ];
     }
 }

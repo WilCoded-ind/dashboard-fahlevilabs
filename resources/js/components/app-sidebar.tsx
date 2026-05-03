@@ -13,8 +13,9 @@ import {
 } from '@/components/ui/sidebar';
 import { dashboard } from '@/routes';
 
+
 export function AppSidebar() {
-    const { menus } = usePage().props as any;
+    const { sidebarMenus } = usePage().props as any;
 
     return (
         <Sidebar collapsible="icon" variant="inset">
@@ -31,7 +32,7 @@ export function AppSidebar() {
             </SidebarHeader>
 
             <SidebarContent>
-                <NavMain menus={menus ?? []} />
+                <NavMain menus={sidebarMenus} />
             </SidebarContent>
 
             <SidebarFooter>
