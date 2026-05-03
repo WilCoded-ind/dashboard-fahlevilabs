@@ -5,11 +5,11 @@ import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 
-export default function CreateUser() {
+export default function CreateMenus() {
     return (
         <>
-            <Head title="User Management" />
-            <div className="max-w-8xl overflow-x-auto rounded-xl p-4 md:p-8">
+            <Head title="Menu Management" />
+            <div className="max-w-8xl overflow-x-auto rounded-xl p-2 md:px-6">
                 {/* breadcrumbs */}
                 <div>
                     {/* breadcrumbs sementara buat preview aja */}
@@ -190,7 +190,7 @@ export default function CreateUser() {
                                     <Button className="">Save</Button>
 
                                     {/* batal */}
-                                    <a href="/roles">
+                                    <a href="/menus">
                                         <Button variant="outline" className="">
                                             Cancel
                                         </Button>
@@ -207,11 +207,11 @@ export default function CreateUser() {
     );
 }
 
-// CreateUser.layout = {
-//     breadcrumbs: [
-//         {
-//             title: 'Create User',
-//             href: '#',
-//         },
-//     ],
-// };
+CreateMenus.layout = {
+    breadcrumbs: [
+        {
+            title: 'Menu Management',
+            href: '/menus/create',
+        },
+    ],
+};

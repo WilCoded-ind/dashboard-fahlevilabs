@@ -34,8 +34,9 @@ const columns: ColumnDef<any>[] = [
         header: 'URL',
     },
     {
-        accessorKey: 'menus.parent_id',
+        accessorKey: 'parent.name',
         header: 'Parent Menu',
+        cell: ({ row }) => row.original.parent?.name ?? '-',
     },
     {
         accessorKey: 'icon',

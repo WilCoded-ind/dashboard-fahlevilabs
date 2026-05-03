@@ -13,13 +13,18 @@ class MenuRepository implements MenuRepositoryInterface
     // method - ambil semua data menu 
     public function getAll(array $params): LengthAwarePaginator
     {
-        return Menu::with('children')
-            ->whereNull('parent_id')
+        return Menu::with(['parent', 'children'])
             ->when($params['search'] ?? null, fn($q, $search) =>
-                $q->where('name', 'like', "%$search%")
-                    ->orWhere('url', 'like', "%$search%")
+                $q->where(function ($query) use ($search) {
+                    $query->where('name', 'like', "%$search%")
+                        ->orWhere('url', 'like', "%$search%")
+                        ->orWhereHas('parent', fn($parent) =>
+                            $parent->where('name', 'like', "%$search%"));
+                })
             )
-            ->orderBy($params['sort'] ?? 'id', $params['direction'] ?? 'asc')
+            ->orderByRaw('parent_id is not null')
+            ->orderBy('parent_id')
+            ->orderBy($params['sort'] ?? 'order', $params['direction'] ?? 'asc')
             ->paginate($params['per_page'] ?? 10);
     }
 

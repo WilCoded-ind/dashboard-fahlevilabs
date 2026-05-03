@@ -1,10 +1,10 @@
 import { Link } from '@inertiajs/react';
 import * as Icons from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
+import { LayoutGrid } from 'lucide-react';
 import {
     SidebarGroup,
     SidebarGroupContent,
-    SidebarGroupLabel,
     SidebarMenu,
     SidebarMenuButton,
     SidebarMenuItem,
@@ -13,6 +13,7 @@ import {
     SidebarMenuSubItem,
 } from '@/components/ui/sidebar';
 import { useCurrentUrl } from '@/hooks/use-current-url';
+import { dashboard } from '@/routes';
 
 type SidebarMenuItem = {
     id: number;
@@ -34,6 +35,26 @@ export function NavMain({ menus }: { menus: SidebarMenuItem[] }) {
 
     return (
         <>
+            <SidebarGroup className="px-2 py-0 mt-2">
+                <SidebarGroupContent>
+                    <SidebarMenu>
+                        <SidebarMenuItem>
+                            <SidebarMenuButton
+                                asChild
+                                isActive={isCurrentUrl(dashboard())}
+                                tooltip="Dashboard"
+                                className="text-sidebar-foreground"
+                            >
+                                <Link href={dashboard()} prefetch>
+                                    <LayoutGrid />
+                                    <span>Dashboard</span>
+                                </Link>
+                            </SidebarMenuButton>
+                        </SidebarMenuItem>
+                    </SidebarMenu>
+                </SidebarGroupContent>
+            </SidebarGroup>
+
             {safeMenus.map((menu) => {
                 const Icon = resolveIcon(menu.icon);
 
@@ -63,25 +84,8 @@ export function NavMain({ menus }: { menus: SidebarMenuItem[] }) {
 
                 return (
                     <SidebarGroup key={menu.id} className="px-2 py-0">
-                        <SidebarGroupLabel className="text-sidebar-foreground/70">
-                            {menu.name}
-                        </SidebarGroupLabel>
                         <SidebarGroupContent>
                             <SidebarMenu>
-                                <SidebarMenuItem>
-                                    <SidebarMenuButton
-                                        asChild
-                                        isActive={isCurrentUrl(menu.url ?? '')}
-                                        tooltip={menu.name}
-                                        className="text-sidebar-foreground"
-                                    >
-                                        <Link href={menu.url ?? '#'} prefetch>
-                                            {Icon && <Icon />}
-                                            <span>{menu.name}</span>
-                                        </Link>
-                                    </SidebarMenuButton>
-                                </SidebarMenuItem>
-
                                 <SidebarMenuSub>
                                     {menu.children.map((child) => {
                                         const ChildIcon = resolveIcon(child.icon);
