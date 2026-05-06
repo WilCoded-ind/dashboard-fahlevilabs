@@ -119,6 +119,29 @@ export default function CreateMenus() {
                                             />
                                         </div>
 
+                                        {/* url */}
+                                        <div className="grid grid-cols-1 gap-2 md:grid-cols-3">
+                                            <Label>
+                                                URL
+                                                <span className="text-destructive">
+                                                    *
+                                                </span>
+                                            </Label>
+
+                                            <div className="col-span-2 w-full">
+                                                <div className="flex items-center gap-2">
+                                                    <Input
+                                                        type="text"
+                                                        placeholder="Enter URL"
+                                                    />
+                                                </div>
+                                                <span className="text-xs text-muted-foreground">
+                                                    e.g. "users.index",
+                                                    "roles.index", etc.
+                                                </span>
+                                            </div>
+                                        </div>
+
                                         {/* parent */}
                                         <div className="grid grid-cols-1 gap-2 md:grid-cols-3">
                                             <Label>
@@ -165,7 +188,11 @@ export default function CreateMenus() {
                                                         type="text"
                                                         placeholder="Enter menu order"
                                                     />
-                                                    <a href="https://lucide.dev/icons/" target="_blank" rel="noopener noreferrer">
+                                                    <a
+                                                        href="https://lucide.dev/icons/"
+                                                        target="_blank"
+                                                        rel="noopener noreferrer"
+                                                    >
                                                         <Button variant="outline">
                                                             Browse Icons
                                                         </Button>
