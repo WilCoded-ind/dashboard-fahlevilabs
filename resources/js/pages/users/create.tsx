@@ -239,11 +239,11 @@ export default function CreateUser() {
     );
 }
 
-// CreateUser.layout = {
-//     breadcrumbs: [
-//         {
-//             title: 'Create User',
-//             href: '#',
-//         },
-//     ],
-// };
+CreateUser.layout = {
+    breadcrumbs: [
+        {
+            title: 'Create User',
+            href: '#',
+        },
+    ],
+};

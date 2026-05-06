@@ -1,9 +1,16 @@
 import { Head } from '@inertiajs/react';
-import { ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import {
+    Breadcrumb,
+    BreadcrumbItem,
+    BreadcrumbLink,
+    BreadcrumbList,
+    BreadcrumbPage,
+    BreadcrumbSeparator,
+} from '@/components/ui/breadcrumb';
 
 export default function CreateRole() {
     return (
@@ -11,46 +18,34 @@ export default function CreateRole() {
             <Head title="Create Role" />
             <div className="max-w-8xl overflow-x-auto rounded-xl p-4 md:p-8">
                 {/* breadcrumbs */}
-                <div>
-                    {/* breadcrumbs sementara buat preview aja */}
-                    <nav
-                        className="flex flex-wrap justify-start pb-4"
-                        aria-label="Breadcrumb"
-                    >
-                        <ol className="inline-flex items-center space-x-1 md:space-x-3">
-                            <li className="inline-flex items-center">
-                                <a
-                                    href="/dashboard"
-                                    className="inline-flex items-center text-sm font-medium text-gray-700 hover:text-gray-900"
-                                >
-                                    Dashboard
-                                </a>
-                            </li>
-                            <li>
-                                <div className="flex items-center">
-                                    <ChevronRight className="h-4 w-4 text-gray-400" />
-                                    <a
-                                        href="/roles"
-                                        className="ml-1 text-sm font-medium text-gray-700 hover:text-gray-900 md:ml-2"
-                                    >
-                                        Role & Permissions
-                                    </a>
-                                </div>
-                            </li>
-                            <li>
-                                <div className="flex items-center">
-                                    <ChevronRight className="h-4 w-4 text-gray-400" />
-                                    <a
-                                        href="/roles/create"
-                                        className="ml-1 text-sm font-medium text-gray-700 hover:text-gray-900 md:ml-2"
-                                    >
-                                        Add New Role
-                                    </a>
-                                </div>
-                            </li>
-                        </ol>
-                    </nav>
-                </div>
+                <Breadcrumb className="pb-3">
+                    <BreadcrumbList>
+                        <BreadcrumbItem>
+                            <BreadcrumbLink href="/dashboard">
+                                Dashboard
+                            </BreadcrumbLink>
+                        </BreadcrumbItem>
+
+                        <BreadcrumbSeparator />
+                        <BreadcrumbItem>
+                            <BreadcrumbLink href="#">
+                                Administrator
+                            </BreadcrumbLink>
+                        </BreadcrumbItem>
+
+                        <BreadcrumbSeparator />
+                        <BreadcrumbItem>
+                            <BreadcrumbLink href="/users">
+                                Role & Permission
+                            </BreadcrumbLink>
+                        </BreadcrumbItem>
+
+                        <BreadcrumbSeparator />
+                        <BreadcrumbItem>
+                            <BreadcrumbPage>Create New Role</BreadcrumbPage>
+                        </BreadcrumbItem>
+                    </BreadcrumbList>
+                </Breadcrumb>
 
                 {/* header */}
                 <div className="">

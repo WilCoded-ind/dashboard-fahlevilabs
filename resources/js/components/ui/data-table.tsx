@@ -117,9 +117,10 @@ export function DataTable<TData, TValue>({
                 </div>
 
                 {/* search */}
-                <div>
+                <div className='grid grid-cols-2 gap-2 items-center'>
+                    <span className='text-right text-base text-muted-foreground '>Search :</span>
                     <Input
-                        placeholder="Search..."
+                        placeholder="..."
                         value={search}
                         onChange={(e) => setSearch(e.target.value)}
                         className="max-w-sm"
