@@ -12,7 +12,7 @@ class MenuService implements MenuServiceInterface
 {
     // constructor - inject MenuRepositoryInterface
     public function __construct(
-        protected MenuRepositoryInterface $menuRepository   
+        protected MenuRepositoryInterface $menuRepository
     ) {}
 
     // method - ambil semua data Menu
@@ -50,4 +50,11 @@ class MenuService implements MenuServiceInterface
     {
         $this->menuRepository->delete($menu);
     }
+
+    //
+    public function getAllWithChildren(): Collection
+    {
+        return $this->menuRepository->getAllWithChildren();
+    }
+
 }

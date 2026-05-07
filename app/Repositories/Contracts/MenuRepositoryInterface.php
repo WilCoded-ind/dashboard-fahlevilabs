@@ -25,4 +25,7 @@ interface MenuRepositoryInterface
 
     // hapus data menu
     public function delete(Menu $menu): void;
+
+    // menagmbil data children
+    public function getAllWithChildren(): Collection;
 }

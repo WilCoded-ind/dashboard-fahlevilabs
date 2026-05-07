@@ -9,7 +9,7 @@ use App\Repositories\Contracts\PermissionRepositoryInterface;
 class PermissionRepository implements PermissionRepositoryInterface
 {
     // method - ambil data permission berdasarkan role id
-    public function getByRoleID (int $roleId): Collection
+    public function getByRoleId (int $roleId): Collection
     {
         return Permission::with('menu')->where('role_id', $roleId)->get();
     }

@@ -84,9 +84,10 @@ class RoleController extends Controller
     {
         return Inertia::render('roles/permission', [
             'role' => $role,
-            'menus' => $this->menuService->getAll([]),
+            'menus' => $this->menuService->getAllWithChildren([]),
             'permissions' => $this->permissionService->getByRoleId($role->id),
         ]);
+
     }
 
     // method update permission
@@ -97,6 +98,6 @@ class RoleController extends Controller
             $request->validated()['permissions'],
         );
 
-        return redirect()->route('roles.permissions', $role);
+        return redirect()->route('roles.permission', $role);
     }
 }

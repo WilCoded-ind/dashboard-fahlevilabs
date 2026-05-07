@@ -10,7 +10,7 @@ use App\Models\Permission;
 
 class MenuRepository implements MenuRepositoryInterface
 {
-    // method - ambil semua data menu 
+    // method - ambil semua data menu
     public function getAll(array $params): LengthAwarePaginator
     {
         return Menu::with(['parent', 'children'])
@@ -74,5 +74,13 @@ class MenuRepository implements MenuRepositoryInterface
     public function delete(Menu $menu): void
     {
         $menu->delete();
+    }
+
+    public function getAllWithChildren(): Collection
+    {
+        return Menu::with(['children' => fn($q) => $q->orderBy('order')])
+        ->whereNull('parent_id')
+        ->orderBy('order')
+        ->get();
     }
 }
