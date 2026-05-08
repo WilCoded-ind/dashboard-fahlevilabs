@@ -1,4 +1,4 @@
-import { Head } from '@inertiajs/react';
+import { Head, useForm } from '@inertiajs/react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -13,6 +13,17 @@ import {
 } from '@/components/ui/breadcrumb';
 
 export default function CreateRole() {
+    // handle form
+    const { data, setData, post, processing, errors } = useForm({
+        name: '',
+        initials: '',
+    });
+
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        post('/roles');
+    };
+
     return (
         <>
             <Head title="Create Role" />
@@ -55,7 +66,8 @@ export default function CreateRole() {
                                 Add your new role
                             </h1>
                             <span className="text-md text-gray-600/90">
-                                Create and manage your application's roles for better access control and security.
+                                Create and manage your application's roles for
+                                better access control and security.
                             </span>
                         </div>
                     </div>
@@ -65,63 +77,86 @@ export default function CreateRole() {
                         <div className="border-t border-gray-400/70 shadow" />
 
                         <div className="mt-3">
-                            <Card className="md:w-1/2 p-5 md:p-6">
+                            <Card className="p-5 md:w-1/2 md:p-6">
                                 <div className="flex flex-col text-left">
                                     <h1 className="text-xl font-bold">
                                         Form New Role
                                     </h1>
                                     <span className="text-sm text-muted-foreground">
-                                        Fields marked with <span className='text-destructive'>*</span> are required
+                                        Fields marked with{' '}
+                                        <span className="text-destructive">
+                                            *
+                                        </span>{' '}
+                                        are required
                                     </span>
                                 </div>
 
-                                <div className="pt-6">
-                                    {/* form */}
-                                    <div className="flex flex-col gap-4">
-                                        {/* nama role */}
-                                        <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
-                                            <Label>
-                                                Role Name
-                                                <span className="text-destructive">
-                                                    *
-                                                </span>
-                                            </Label>
-                                            <Input
-                                                type="text"
-                                                placeholder="Enter role name"
-                                                className="w-full col-span-2"
-                                            />
-                                        </div>
+                                <form onSubmit={handleSubmit}>
+                                    <div className="pt-6">
+                                        {/* form */}
+                                        <div className="flex flex-col gap-4">
+                                            {/* nama role */}
+                                            <div className="grid grid-cols-1 gap-2 md:grid-cols-3">
+                                                <Label>
+                                                    Role Name
+                                                    <span className="text-destructive">
+                                                        *
+                                                    </span>
+                                                </Label>
+                                                <Input
+                                                    type="text"
+                                                    placeholder="Enter role name"
+                                                    className="col-span-2 w-full"
+                                                    value={data.name}
+                                                    onChange={(e) => setData('name', e.target.value)}
+                                                />
 
-                                        {/* initials */}
-                                        <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
-                                            <Label>
-                                                Initials
-                                                <span className="text-destructive">
-                                                    *
-                                                </span>
-                                            </Label>
-                                            <Input
-                                                type="text"
-                                                placeholder="Enter initials (e.g., admin, editor)"
-                                                className="w-full col-span-2"
-                                            />
+                                                {/* error */}
+                                                {errors.name && (
+                                                    <p className="text-sm text-destructive">
+                                                        {errors.name}
+                                                    </p>
+                                                )}
+                                            </div>
+
+                                            {/* initials */}
+                                            <div className="grid grid-cols-1 gap-2 md:grid-cols-3">
+                                                <Label>
+                                                    Initials
+                                                    <span className="text-destructive">
+                                                        *
+                                                    </span>
+                                                </Label>
+                                                <Input
+                                                    type="text"
+                                                    placeholder="Enter initials (e.g., admin, editor)"
+                                                    className="col-span-2 w-full"
+                                                    value={data.initials}
+                                                    onChange={(e) => setData('initials', e.target.value)}
+                                                />
+
+                                                {/* error */}
+                                                {errors.initials && (
+                                                    <p className="text-sm text-destructive">
+                                                        {errors.initials}
+                                                    </p>
+                                                )}
+                                            </div>
+
                                         </div>
                                     </div>
-                                </div>
+                                </form>
                                 {/* border */}
                                 <div className="border-t border-gray-400/30" />
 
                                 {/* button */}
-                                <div className='flex justify-end gap-2'>
+                                <div className="flex justify-end gap-2">
                                     {/* simpan */}
-                                    <Button className=''>
-                                        Save
-                                    </Button>
+                                    <Button type="submit" disabled={processing}>Save</Button>
 
                                     {/* batal */}
                                     <a href="/roles">
-                                        <Button variant="outline" className=''>
+                                        <Button variant="outline" className="">
                                             Cancel
                                         </Button>
                                     </a>
