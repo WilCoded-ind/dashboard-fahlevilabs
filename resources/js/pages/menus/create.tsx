@@ -1,9 +1,16 @@
 import { Head } from '@inertiajs/react';
-import { ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import {
+    Breadcrumb,
+    BreadcrumbItem,
+    BreadcrumbLink,
+    BreadcrumbList,
+    BreadcrumbPage,
+    BreadcrumbSeparator,
+} from '@/components/ui/breadcrumb';
 
 export default function CreateMenus() {
     return (
@@ -11,46 +18,27 @@ export default function CreateMenus() {
             <Head title="Menu Management" />
             <div className="max-w-8xl overflow-x-auto rounded-xl p-2 md:px-6">
                 {/* breadcrumbs */}
-                <div>
-                    {/* breadcrumbs sementara buat preview aja */}
-                    <nav
-                        className="flex justify-start pb-4"
-                        aria-label="Breadcrumb"
-                    >
-                        <ol className="inline-flex items-center space-x-1 md:space-x-3">
-                            <li className="inline-flex items-center">
-                                <a
-                                    href="/dashboard"
-                                    className="inline-flex items-center text-sm font-medium text-gray-700 hover:text-gray-900"
-                                >
-                                    Dashboard
-                                </a>
-                            </li>
-                            <li>
-                                <div className="flex items-center">
-                                    <ChevronRight className="h-4 w-4 text-gray-400" />
-                                    <a
-                                        href="/menus"
-                                        className="ml-1 text-sm font-medium text-gray-700 hover:text-gray-900 md:ml-2"
-                                    >
-                                        Menu Management
-                                    </a>
-                                </div>
-                            </li>
-                            <li>
-                                <div className="flex items-center">
-                                    <ChevronRight className="h-4 w-4 text-gray-400" />
-                                    <a
-                                        href="/menus/create"
-                                        className="ml-1 text-sm font-medium text-gray-700 hover:text-gray-900 md:ml-2"
-                                    >
-                                        Add New Menu
-                                    </a>
-                                </div>
-                            </li>
-                        </ol>
-                    </nav>
-                </div>
+                <Breadcrumb className="pb-3">
+                    <BreadcrumbList>
+                        <BreadcrumbItem>
+                            <BreadcrumbLink href="/dashboard">
+                                Dashboard
+                            </BreadcrumbLink>
+                        </BreadcrumbItem>
+
+                        <BreadcrumbSeparator />
+                        <BreadcrumbItem>
+                            <BreadcrumbLink href="/users">
+                                Menu Management
+                            </BreadcrumbLink>
+                        </BreadcrumbItem>
+
+                        <BreadcrumbSeparator />
+                        <BreadcrumbItem>
+                            <BreadcrumbPage>Create New Menu</BreadcrumbPage>
+                        </BreadcrumbItem>
+                    </BreadcrumbList>
+                </Breadcrumb>
 
                 {/* header */}
                 <div className="">

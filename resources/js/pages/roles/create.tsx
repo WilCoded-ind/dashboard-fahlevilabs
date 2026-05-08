@@ -137,11 +137,11 @@ export default function CreateRole() {
     );
 }
 
-// CreateUser.layout = {
-//     breadcrumbs: [
-//         {
-//             title: 'Create User',
-//             href: '#',
-//         },
-//     ],
-// };
+CreateRole.layout = {
+    breadcrumbs: [
+        {
+            title: 'Create Role',
+            href: '#',
+        },
+    ],
+};
