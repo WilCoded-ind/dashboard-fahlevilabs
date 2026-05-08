@@ -1,23 +1,15 @@
-import { Head } from '@inertiajs/react';
-import { ChevronRight } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { dashboard } from '@/routes';
-import { router } from '@inertiajs/react';
-import { Trash, Pen, Eye } from 'lucide-react';
+import { Head, router } from '@inertiajs/react';
+import type { ColumnDef } from '@tanstack/react-table';
+import { Eye, Pen, Trash } from 'lucide-react';
 import {
     Breadcrumb,
     BreadcrumbItem,
     BreadcrumbLink,
     BreadcrumbList,
-    BreadcrumbPage,
     BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb';
-
-// datatable
+import { Button } from '@/components/ui/button';
 import { DataTable } from '@/components/ui/data-table';
-import { ColumnDef } from '@tanstack/react-table';
 
 // datatable
 const columns: ColumnDef<any>[] = [
@@ -110,7 +102,7 @@ export default function MenusIndex({ menus }: { menus: any }) {
                 <div className="mb-2 flex flex-wrap justify-start gap-2 md:justify-end">
                     {/* tombol header */}
                     {/* add */}
-                    <a href="menus/create">
+                    <a href="/menus/create">
                         <Button variant="secondary" size="sm">
                             Add New
                         </Button>

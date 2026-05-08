@@ -108,7 +108,12 @@ export default function CreateRole() {
                                                     placeholder="Enter role name"
                                                     className="col-span-2 w-full"
                                                     value={data.name}
-                                                    onChange={(e) => setData('name', e.target.value)}
+                                                    onChange={(e) =>
+                                                        setData(
+                                                            'name',
+                                                            e.target.value,
+                                                        )
+                                                    }
                                                 />
 
                                                 {/* error */}
@@ -132,7 +137,12 @@ export default function CreateRole() {
                                                     placeholder="Enter initials (e.g., admin, editor)"
                                                     className="col-span-2 w-full"
                                                     value={data.initials}
-                                                    onChange={(e) => setData('initials', e.target.value)}
+                                                    onChange={(e) =>
+                                                        setData(
+                                                            'initials',
+                                                            e.target.value,
+                                                        )
+                                                    }
                                                 />
 
                                                 {/* error */}
@@ -142,7 +152,6 @@ export default function CreateRole() {
                                                     </p>
                                                 )}
                                             </div>
-
                                         </div>
                                     </div>
 
@@ -152,11 +161,20 @@ export default function CreateRole() {
                                     {/* button */}
                                     <div className="flex justify-end gap-2">
                                         {/* simpan */}
-                                        <Button type="submit" disabled={processing}>Save</Button>
+                                        <Button
+                                            type="submit"
+                                            disabled={processing}
+                                        >
+                                            Save
+                                        </Button>
 
                                         {/* batal */}
                                         <a href="/roles">
-                                            <Button type="button" variant="outline" className="">
+                                            <Button
+                                                type="button"
+                                                variant="outline"
+                                                className=""
+                                            >
                                                 Cancel
                                             </Button>
                                         </a>
