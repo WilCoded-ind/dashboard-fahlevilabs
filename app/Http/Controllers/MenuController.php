@@ -21,8 +21,8 @@ class MenuController extends Controller
     public function index(): Response
     {
         return Inertia::render('menus/index', [
-            // 'menus' => $this->menuService->getAll(request()->all()),
-            'menus' => $this->menuService->getAllWtihChildren(),
+            'menus' => $this->menuService->getAll(request()->all()),
+            // 'menus' => $this->menuService->getAllWtihChildren(),
         ]);
     }
 

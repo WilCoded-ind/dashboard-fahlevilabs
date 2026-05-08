@@ -1,8 +1,4 @@
 import { Head, useForm } from '@inertiajs/react';
-import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import {
     Breadcrumb,
     BreadcrumbItem,
@@ -11,6 +7,10 @@ import {
     BreadcrumbPage,
     BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb';
+import { Button } from '@/components/ui/button';
+import { Card } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 
 export default function CreateRole() {
     // handle form
@@ -145,22 +145,23 @@ export default function CreateRole() {
 
                                         </div>
                                     </div>
+
+                                    {/* border */}
+                                    <div className="border-t border-gray-400/30" />
+
+                                    {/* button */}
+                                    <div className="flex justify-end gap-2">
+                                        {/* simpan */}
+                                        <Button type="submit" disabled={processing}>Save</Button>
+
+                                        {/* batal */}
+                                        <a href="/roles">
+                                            <Button type="button" variant="outline" className="">
+                                                Cancel
+                                            </Button>
+                                        </a>
+                                    </div>
                                 </form>
-                                {/* border */}
-                                <div className="border-t border-gray-400/30" />
-
-                                {/* button */}
-                                <div className="flex justify-end gap-2">
-                                    {/* simpan */}
-                                    <Button type="submit" disabled={processing}>Save</Button>
-
-                                    {/* batal */}
-                                    <a href="/roles">
-                                        <Button variant="outline" className="">
-                                            Cancel
-                                        </Button>
-                                    </a>
-                                </div>
                             </Card>
                         </div>
                     </div>
