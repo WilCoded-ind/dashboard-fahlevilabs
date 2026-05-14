@@ -1,6 +1,6 @@
 import { Head, router } from '@inertiajs/react';
 import type { ColumnDef } from '@tanstack/react-table';
-import { Eye, Pen, Trash } from 'lucide-react';
+import { Eye, Pen, Plus, RefreshCcw, Trash } from 'lucide-react';
 import {
     Breadcrumb,
     BreadcrumbItem,
@@ -10,6 +10,17 @@ import {
 } from '@/components/ui/breadcrumb';
 import { Button } from '@/components/ui/button';
 import { DataTable } from '@/components/ui/data-table';
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+    AlertDialogTrigger,
+} from '@/components/ui/alert-dialog';
 
 // datatable
 const columns: ColumnDef<any>[] = [
@@ -49,17 +60,35 @@ const columns: ColumnDef<any>[] = [
                         <Pen className="h-4 w-4" />
                     </Button>
                 </a>
-                <Button
-                    variant="destructive"
-                    size="sm"
-                    onClick={() => {
-                        if (confirm('Yakin mau hapus menu ini?')) {
-                            router.delete(`/menus/${row.original.id}`);
-                        }
-                    }}
-                >
-                    <Trash className="h-4 w-4" />
-                </Button>
+                <AlertDialog>
+                    <AlertDialogTrigger asChild>
+                        <Button variant="destructive" size="sm" ><Trash className="h-4 w-4" /></Button>
+                    </AlertDialogTrigger>
+                    <AlertDialogContent>
+                        <AlertDialogHeader>
+                            <AlertDialogTitle>
+                                Are you absolutely sure?
+                            </AlertDialogTitle>
+                            <AlertDialogDescription>
+                                This action cannot be undone. This will
+                                permanently delete your account from our
+                                servers.
+                            </AlertDialogDescription>
+                        </AlertDialogHeader>
+                        <AlertDialogFooter>
+                            <AlertDialogCancel>Cancel</AlertDialogCancel>
+                            <AlertDialogAction
+                                onClick={() => {
+                                    router.delete(
+                                            `/menus/${row.original.id}`,
+                                        );
+                                }}
+                            >
+                                Continue
+                            </AlertDialogAction>
+                        </AlertDialogFooter>
+                    </AlertDialogContent>
+                </AlertDialog>
             </div>
         ),
     },
@@ -103,24 +132,32 @@ export default function MenusIndex({ menus }: { menus: any }) {
                     {/* tombol header */}
                     {/* add */}
                     <a href="/menus/create">
-                        <Button variant="secondary" size="sm">
+                        <Button
+                            variant="secondary"
+                            size="sm"
+                            className="items-center text-xs"
+                        >
+                            <Plus className="size-3" />
                             Add New
                         </Button>
                     </a>
 
-
                     {/* refresh */}
-                    {/* <Button variant="secondary" size="sm" >
-                        Refresh
-                    </Button> */}
+                    <Button
+                        variant="secondary"
+                        size="sm"
+                        className="items-center text-xs"
+                    >
+                        <RefreshCcw className="size-3" /> Refresh
+                    </Button>
                 </div>
 
                 {/* garis pembatas */}
-                <div className="border-t border-gray-400/70 shadow" />
+                {/* <div className="border-t border-gray-400/70 shadow" /> */}
 
                 {/* datatable */}
                 <div className="mt-3">
-                    <DataTable columns={columns} data={menuRows} meta={menus}/>
+                    <DataTable columns={columns} data={menuRows} meta={menus} />
                 </div>
             </div>
         </>

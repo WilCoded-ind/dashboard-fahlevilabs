@@ -38,12 +38,24 @@ class MenuRepository implements MenuRepositoryInterface
 
         // ambil data menu beserta children yang boleh diakses berdasarkan menu id yang sudah didapat
         return Menu::with(['children' => function($q) use ($allowedMenuIds) {
-                $q->whereIn('id', $allowedMenuIds)->orderBy('order');
+                $q->where(function($childQuery) use ($allowedMenuIds) {
+                    $childQuery->whereIn('id', $allowedMenuIds)
+                        ->orWhereHas('children', function($grandChildQuery) use ($allowedMenuIds) {
+                            $grandChildQuery->whereIn('id', $allowedMenuIds);
+                        });
+                })
+                ->with(['children' => function($grandChildQuery) use ($allowedMenuIds) {
+                    $grandChildQuery->whereIn('id', $allowedMenuIds)->orderBy('order');
+                }])
+                ->orderBy('order');
             }])
             ->whereNull('parent_id')
             ->where(function($q) use ($allowedMenuIds) {
                 $q->whereIn('id', $allowedMenuIds)
                   ->orWhereHas('children', function($q2) use ($allowedMenuIds) {
+                      $q2->whereIn('id', $allowedMenuIds);
+                  })
+                  ->orWhereHas('children.children', function($q2) use ($allowedMenuIds) {
                       $q2->whereIn('id', $allowedMenuIds);
                   });
             })
@@ -78,7 +90,10 @@ class MenuRepository implements MenuRepositoryInterface
 
     public function getAllWithChildren(): Collection
     {
-        return Menu::with(['children' => fn($q) => $q->orderBy('order')])
+        return Menu::with([
+            'children' => fn($q) => $q->orderBy('order'),
+            'children.children' => fn($q) => $q->orderBy('order'),
+        ])
         ->whereNull('parent_id')
         ->orderBy('order')
         ->get();

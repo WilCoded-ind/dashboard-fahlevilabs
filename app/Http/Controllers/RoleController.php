@@ -74,6 +74,12 @@ class RoleController extends Controller
      */
     public function destroy(Role $role): RedirectResponse
     {
+        if ($role->users()->exists()) {
+            return back()->withErrors([
+                'role' => 'Role masih digunakan user dan tidak bisa dihapus.',
+            ]);
+        }
+
         $this->roleService->delete($role);
 
         return redirect()->route('roles.index');
@@ -84,7 +90,7 @@ class RoleController extends Controller
     {
         return Inertia::render('roles/permission', [
             'role' => $role,
-            'menus' => $this->menuService->getAllWithChildren([]),
+            'menus' => $this->menuService->getAllWithChildren(),
             'permissions' => $this->permissionService->getByRoleId($role->id),
         ]);
 

@@ -29,6 +29,7 @@ import {
     TableHeader,
     TableRow,
 } from '@/components/ui/table';
+import { FileInput, FileOutput, Plus, SlidersHorizontal,  } from 'lucide-react';
 
 // pagination meta
 interface Meta {
@@ -86,6 +87,10 @@ export function DataTable<TData, TValue>({
     return (
         <div className="space-y-4">
             {/* toolbar */}
+
+            {/* garis pembatas */}
+            <div className="border-t border-gray-400/70 shadow" />
+
             <div className="flex items-center justify-between">
                 {/* show entries */}
                 <div className="flex items-center gap-2">

@@ -32,7 +32,7 @@ class MenuController extends Controller
     public function create(): Response
     {
         return Inertia::render('menus/create', [
-            'parent' => $this->menuService->getAll([]),
+            'parents' => $this->menuService->getAllWithChildren(),
         ]);
     }
 
@@ -61,7 +61,7 @@ class MenuController extends Controller
     {
         return Inertia::render('menus/edit', [
             'menu'      => $menu,
-            'parent'    => $this->menuService->getAll([]),
+            'parents'   => $this->menuService->getAllWithChildren(),
         ]);
     }
 

@@ -12,6 +12,7 @@ class RoleRepository implements RoleRepositoryInterface
     public function getAll(array $params): LengthAwarePaginator
     {
         return Role::query()
+            ->withCount('users')
             ->when($params['search'] ?? null, fn($q, $search) =>
                 $q->where('name', 'like', "%$search%")
                     ->orWhere('initials', 'like', "%$search%")

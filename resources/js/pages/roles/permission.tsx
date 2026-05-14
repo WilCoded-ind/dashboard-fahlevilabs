@@ -1,15 +1,5 @@
 import { Head, useForm } from '@inertiajs/react';
-import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
-import {
-    Table,
-    TableHead,
-    TableHeader,
-    TableBody,
-    TableRow,
-    TableCell,
-} from '@/components/ui/table';
-import { Checkbox } from '@/components/ui/checkbox';
+import type { ReactNode } from 'react';
 import {
     Breadcrumb,
     BreadcrumbItem,
@@ -18,6 +8,17 @@ import {
     BreadcrumbPage,
     BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb';
+import { Button } from '@/components/ui/button';
+import { Card } from '@/components/ui/card';
+import { Checkbox } from '@/components/ui/checkbox';
+import {
+    Table,
+    TableBody,
+    TableCell,
+    TableHead,
+    TableHeader,
+    TableRow,
+} from '@/components/ui/table';
 
 type Menu = {
     id: number;
@@ -58,22 +59,28 @@ export default function RolePermission({
     menus: Menu[];
     permissions: Permission[];
 }) {
-    // build initial form state
     const initial: Record<number, PermFlags> = {};
 
-    menus.forEach((menu) => {
-        if (!menu.children?.length) initial[menu.id] = emptyFlags();
-        menu.children?.forEach((child) => {
-            initial[child.id] = emptyFlags();
-        });
-    });
+    const collectLeafMenus = (items: Menu[]): void => {
+        items.forEach((menu) => {
+            if (!menu.children?.length) {
+                initial[menu.id] = emptyFlags();
 
-    permissions.forEach((p) => {
-        initial[p.menu_id] = {
-            can_view: p.can_view,
-            can_create: p.can_create,
-            can_update: p.can_update,
-            can_delete: p.can_delete,
+                return;
+            }
+
+            collectLeafMenus(menu.children);
+        });
+    };
+
+    collectLeafMenus(menus);
+
+    permissions.forEach((permission) => {
+        initial[permission.menu_id] = {
+            can_view: permission.can_view,
+            can_create: permission.can_create,
+            can_update: permission.can_update,
+            can_delete: permission.can_delete,
         };
     });
 
@@ -96,10 +103,13 @@ export default function RolePermission({
         put(`/roles/${role.id}/permission`);
     };
 
-    // row dengan checkbox (child & standalone)
-    const renderCheckboxRow = (menu: Menu) => (
+    const renderCheckboxRow = (menu: Menu, depth = 0) => (
         <TableRow key={menu.id}>
-            <TableCell className="font-medium">{menu.name}</TableCell>
+            <TableCell className="font-medium">
+                <span style={{ paddingLeft: `${depth * 1.25}rem` }}>
+                    {menu.name}
+                </span>
+            </TableCell>
             {FIELDS.map(({ key }) => (
                 <TableCell key={key}>
                     <Checkbox
@@ -111,12 +121,32 @@ export default function RolePermission({
         </TableRow>
     );
 
+    const renderMenuRows = (items: Menu[], depth = 0): ReactNode[] =>
+        items.flatMap((menu) => {
+            if (!menu.children?.length) {
+                return [renderCheckboxRow(menu, depth)];
+            }
+
+            return [
+                <TableRow key={`group-${menu.id}`}>
+                    <TableCell className="font-bold">
+                        <span style={{ paddingLeft: `${depth * 1.25}rem` }}>
+                            {menu.name}
+                        </span>
+                    </TableCell>
+                    {FIELDS.map(({ key }) => (
+                        <TableCell key={key} />
+                    ))}
+                </TableRow>,
+                ...renderMenuRows(menu.children, depth + 1),
+            ];
+        });
+
     return (
         <>
             <Head title="Permission Settings" />
 
             <div className="max-w-8xl overflow-x-auto rounded-xl p-4 md:p-8">
-                {/* Breadcrumb */}
                 <Breadcrumb className="pb-3">
                     <BreadcrumbList>
                         <BreadcrumbItem>
@@ -143,7 +173,6 @@ export default function RolePermission({
                     </BreadcrumbList>
                 </Breadcrumb>
 
-                {/* Header */}
                 <div className="mb-6">
                     <h1 className="text-2xl font-bold">
                         Manage Role Permissions
@@ -156,9 +185,7 @@ export default function RolePermission({
 
                 <div className="mb-4 border-t border-gray-400/70" />
 
-                {/* Card */}
                 <Card className="p-5 md:p-6">
-                    {/* Title */}
                     <div className="mb-6">
                         <h2 className="text-xl font-semibold">Permissions</h2>
                         <div className="flex items-center gap-2 text-sm text-muted-foreground">
@@ -178,51 +205,9 @@ export default function RolePermission({
                                 </TableRow>
                             </TableHeader>
 
-                            <TableBody>
-                                {menus.map((menu) =>
-                                    menu.children?.length ? (
-                                        <>
-                                            {/* parent — bold, no checkbox */}
-                                            <TableRow key={`group-${menu.id}`}>
-                                                <TableCell className="font-bold">
-                                                    {menu.name}
-                                                </TableCell>
-                                                {FIELDS.map(({ key }) => (
-                                                    <TableCell key={key} />
-                                                ))}
-                                            </TableRow>
-                                            {/* children — checkbox */}
-                                            {menu.children.map(
-                                                renderCheckboxRow,
-                                            )}
-                                        </>
-                                    ) : (
-                                        // standalone — bold + checkbox
-                                        <TableRow key={menu.id}>
-                                            <TableCell className="font-bold">
-                                                {menu.name}
-                                            </TableCell>
-                                            {FIELDS.map(({ key }) => (
-                                                <TableCell key={key}>
-                                                    <Checkbox
-                                                        checked={
-                                                            data.permissions[
-                                                                menu.id
-                                                            ]?.[key] ?? false
-                                                        }
-                                                        onCheckedChange={() =>
-                                                            toggle(menu.id, key)
-                                                        }
-                                                    />
-                                                </TableCell>
-                                            ))}
-                                        </TableRow>
-                                    ),
-                                )}
-                            </TableBody>
+                            <TableBody>{renderMenuRows(menus)}</TableBody>
                         </Table>
 
-                        {/* Footer */}
                         <div className="mt-6 flex justify-end gap-2 border-t border-gray-400/30 pt-4">
                             <Button type="submit" disabled={processing}>
                                 Save

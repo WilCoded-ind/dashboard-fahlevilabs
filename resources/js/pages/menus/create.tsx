@@ -22,10 +22,7 @@ import {
 type MenuOption = {
     id: number;
     name: string;
-};
-
-type PaginatedMenus = {
-    data: MenuOption[];
+    children: MenuOption[];
 };
 
 const STANDALONE_PARENT = 'standalone';
@@ -38,7 +35,34 @@ const createSlug = (value: string) =>
         .replace(/\s+/g, '-')
         .replace(/-+/g, '-');
 
-export default function CreateMenus({ parent }: { parent: PaginatedMenus }) {
+const buildParentOptions = (menus: MenuOption[], level = 0): MenuOption[] => {
+    if (level > 1) {
+        return [];
+    }
+
+    return menus.flatMap((menu) => [
+        { ...menu, children: [] },
+        ...buildParentOptions(menu.children ?? [], level + 1),
+    ]);
+};
+
+const getMenuLabel = (menu: MenuOption, menus: MenuOption[], level = 0): string | null => {
+    for (const item of menus) {
+        if (item.id === menu.id) {
+            return `${'-- '.repeat(level)}${item.name}`;
+        }
+
+        const childLabel = getMenuLabel(menu, item.children ?? [], level + 1);
+
+        if (childLabel) {
+            return childLabel;
+        }
+    }
+
+    return null;
+};
+
+export default function CreateMenus({ parents }: { parents: MenuOption[] }) {
     // handle form
     const { data, setData, post, processing, transform } = useForm({
         name: '',
@@ -66,6 +90,8 @@ export default function CreateMenus({ parent }: { parent: PaginatedMenus }) {
             slug: createSlug(value),
         }));
     };
+
+    const parentOptions = buildParentOptions(parents);
 
     return (
         <>
@@ -174,9 +200,6 @@ export default function CreateMenus({ parent }: { parent: PaginatedMenus }) {
                                             <div className="grid grid-cols-1 gap-2 md:grid-cols-3">
                                                 <Label>
                                                     URL
-                                                    <span className="text-destructive">
-                                                        *
-                                                    </span>
                                                 </Label>
 
                                                 <div className="col-span-2 w-full">
@@ -195,8 +218,11 @@ export default function CreateMenus({ parent }: { parent: PaginatedMenus }) {
                                                         />
                                                     </div>
                                                     <span className="text-xs text-muted-foreground">
-                                                        e.g. "users.index",
-                                                        "roles.index", etc.
+                                                        Kosongkan jika menu ini
+                                                        hanya dipakai sebagai
+                                                        parent. Isi untuk menu
+                                                        yang langsung membuka
+                                                        halaman.
                                                     </span>
                                                 </div>
                                             </div>
@@ -205,9 +231,6 @@ export default function CreateMenus({ parent }: { parent: PaginatedMenus }) {
                                             <div className="grid grid-cols-1 gap-2 md:grid-cols-3">
                                                 <Label>
                                                     Parent
-                                                    <span className="text-destructive">
-                                                        *
-                                                    </span>
                                                 </Label>
                                                 <Select
                                                     value={data.parent_id}
@@ -229,14 +252,14 @@ export default function CreateMenus({ parent }: { parent: PaginatedMenus }) {
                                                         >
                                                             - Standalone -
                                                         </SelectItem>
-                                                        {parent.data.map((menu) => (
+                                                        {parentOptions.map((menu) => (
                                                             <SelectItem
                                                                 key={menu.id}
                                                                 value={String(
                                                                     menu.id,
                                                                 )}
                                                             >
-                                                                {menu.name}
+                                                                {getMenuLabel(menu, parents) ?? menu.name}
                                                             </SelectItem>
                                                         ))}
                                                     </SelectContent>

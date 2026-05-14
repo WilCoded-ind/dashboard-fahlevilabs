@@ -28,7 +28,13 @@ class CheckPermission
         }
 
         // cek permission user berdasarkan role
-        $permission = $user->role->permissions()
+        $role = $user->role;
+
+        if (!$role) {
+            return redirect('/not-found');
+        }
+
+        $permission = $role->permissions()
             ->where('menu_id', $menu->id)
             ->first();
  
